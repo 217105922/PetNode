@@ -1,4 +1,4 @@
-const db = require('../helpers/database')
+const db = require('../helpers/database');
 //list all the articles in the database
 exports.getAll = async function getAll (page, limit, order) {
   // TODO: use page, limit, order to give pagination

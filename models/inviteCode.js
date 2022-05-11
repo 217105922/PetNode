@@ -1,4 +1,4 @@
-const db = require('../helpers/database')
+const db = require('../helpers/database');
 
 //return result by its code  
 exports.getByCode = async function getByCode (code) {

@@ -4,12 +4,12 @@ const auth = require('../controllers/auth');
 const bodyParser = require('koa-bodyparser')
 const prefix = '/api/v1/codes';
 const router = Router({prefix: prefix});
-const model = require('../models/InviteCode')
+const model = require('../models/inviteCode')
 const request = require('request')
 
-
-router.get('/:id([0-9][A-Za-z]{1,})', getByCode)
 router.get('/)', getAll)
+router.get('/:id([0-9][A-Za-z]{,20})', getByCode)
+
 
 async function getByCode(ctx) {
   print()

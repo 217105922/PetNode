@@ -7,7 +7,7 @@ const dogs = require('./routes/dogs')
 const uploads= require('./routes/uploads')
 const users = require('./routes/users')
 const cors = require('@koa/cors');
-const code = require('./routes/InviteCode')
+const code = require('./routes/inviteCode')
 
 app.use(cors());
 app.use(special.routes())
