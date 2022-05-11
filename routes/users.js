@@ -12,7 +12,7 @@ const router = Router({prefix: prefix});
 router.get('/', auth, getAll)
 router.get('/search', auth, doSearch)
 router.post('/', bodyParser(), createUser)
-router.get('/:id([0-9]{1,})', getById)
+router.get('/:id([0-9]{1,})', auth, getById)
 router.put('/:id([0-9]{1,})',updateUser)
 router.del('/:id([0-9]{1,})', deleteUser)
 router.get('/m', getAllM)
@@ -78,11 +78,18 @@ const permission = can.readAll(ctx.state.user);
         }
 }
 async function getById(ctx) {
+  const permission = can.readAll(ctx.state.user);
+ if (!permission.granted) {
+    ctx.status = 403;
+  } else {
   let id = ctx.params.id
   let user = await model.getByUserId(id)
   if (user.length) {
     ctx.body = user[0]
   }
+   
+  }
+
 }
 
 async function createUser(ctx) {
