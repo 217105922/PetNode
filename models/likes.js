@@ -13,7 +13,7 @@ DO NOTHING;`
 }
 
 exports.findLikeCheck = async function findLikeCheck(id,uid) {
-  let query = `SELECT * FROM articleslikes WHERE  articleid=${id} AND userid=${uid} `
+  let query = 'SELECT * FROM articleslikes WHERE  articleid=${id} AND userid=${uid}'
   try{
     await db.run_query(query, [id, uid]);  
     return {"status": 201, "exisitng":1 }
