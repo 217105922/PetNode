@@ -29,10 +29,14 @@ let codes = await model.getAll();
 
 
 async function generateCode(ctx){
-  let codes = await model.generateCode();
+  let parm =(Math.random() + 1).toString(36).substring(7);
+  if (parm.length){
+    let codes = await model.generateCode(parm);
    if (codes.length) {
     ctx.body = codes
   }
+  }
+
 }
 
 module.exports = router;

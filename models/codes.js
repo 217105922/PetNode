@@ -14,11 +14,10 @@ exports.getAll = async function getAll (limit=10, OFFSET=1) {
   return data
 }
 
-exports.generateCode = async function generateCode () {
-  let parm =(Math.random() + 1).toString(36).substring(7);
-  let value = [parm]
-  let query = 'INSERT INTO Codes code VALUES= ${parm}';
-  let data = await db.run_query(query,value);
+exports.generateCode = async function generateCode (parm,authorid=1) {
+  let query = 'INSERT INTO Codes (code,authorid) VALUES (?,?)';
+ // let value = [parm]
+  let data = await db.run_query(query,[parm,authorid]);
   return parm
 }
 

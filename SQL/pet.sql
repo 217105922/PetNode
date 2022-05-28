@@ -11,7 +11,7 @@ CREATE TABLE public.dogs (
 datecreated timestamp NOT NULL DEFAULT now(),
 	datemodified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-INSERT INTO dogs (title,alltext,imageurl,summary,authorid) VALUES
+INSERT INTO dogs (title,imageurl,summary,authorid) VALUES
 	('last one', '../img/dog.jpg',"The first dogs here",1),
 (' one', '../img/dog.jpg',"The first dogs here",2),
 ('e', '../img/dog.jpg',"The first dogs here",3)
