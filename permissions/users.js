@@ -18,6 +18,8 @@ ac.grant('staff').execute('update').on('user');
 
 
 
+ac.grant('admin').execute('read').on('staff');
+ac.grant('admin').execute('update').on('staff');
 
 ac.grant('admin').execute('read').on('user');
 ac.grant('admin').execute('read').on('users');
@@ -28,6 +30,10 @@ ac.grant('admin').condition({Fn:'NOT_EQUALS', args:
 
 exports.readAll = (requester) =>
 ac.can(requester.role).execute('read').sync().on('users');
+
+exports.staff = (requester) =>
+ac.can(requester.role).execute('read').sync().on('staff');
+
 
 exports.read = (requester, data) =>
 ac.can(requester.role).context({requester:requester.ID, owner:data.ID}).execute('read').sync().on('user');

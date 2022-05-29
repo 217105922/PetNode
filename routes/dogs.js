@@ -8,6 +8,12 @@ const prefix = '/api/v1/dogs';
 const router = Router({prefix: prefix});
 const request = require('request')
 
+
+
+const can = require('../permissions/users');
+
+
+
 router.get('/', getAll)
 router.post('/', bodyParser(), createDog)
 router.get('/:id([0-9]{1,})', getById)
@@ -44,6 +50,7 @@ async function getAll(ctx) {
 
 
 async function getById(ctx) {
+  
   let id = ctx.params.id
   let article = await model.getById(id)
   if (article.length) {
@@ -52,6 +59,10 @@ async function getById(ctx) {
 }
 
 async function createDog(ctx) {
+ const permission = can.staff(ctx.state.user)
+   if (!permission.granted) {
+    ctx.status = 403;
+  } else {
   const body = ctx.request.body
   let result = await model.add(body)
   if (result) {
@@ -61,11 +72,21 @@ async function createDog(ctx) {
     ctx.status=201
     ctx.body = "{}"
   }
+   }
+  
+
 }
+
 
 async function updateDog(ctx) {
   // TODO edit an existing article
-   const body = ctx.request.body
+
+ const permission = can.staff(ctx.state.user)
+   if (!permission.granted) {
+    ctx.status = 403;
+  } else {
+
+        const body = ctx.request.body
    let id = ctx.params.id
  // console.log("route-article " , body)
  // console.log("route-id ",id)
@@ -74,10 +95,19 @@ async function updateDog(ctx) {
     ctx.status = 201
     ctx.body = `Article with id ${id} updated` 
   } 
+   }
+  
+
 }
 
 async function deleteDog(ctx) {
   // TODO delete an existing article
+
+  
+ const permission = can.staff(ctx.state.user)
+   if (!permission.granted) {
+    ctx.status = 403;
+  } else {
    let id = ctx.params.id
   let article = await model.deleteById(id)
   ctx.status=201

@@ -11,8 +11,14 @@ CREATE TABLE public.dogs (
 datecreated timestamp NOT NULL DEFAULT now(),
 	datemodified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-INSERT INTO dogs (title,imageurl,summary,authorid) VALUES
-	('last one', '../img/dog.jpg',"The first dogs here",1),
-(' one', '../img/dog.jpg',"The first dogs here",2),
-('e', '../img/dog.jpg',"The first dogs here",3)
-  
+INSERT INTO dogs (title,alltext,imageurl,summary,authorid) VALUES
+	('Labrador Retriever',' ', '../img/dog.jpg','The first dogs here',1),
+(' French Bulldog',' ', '../img/dog.jpg','The first dogs here',1),
+('German Shepherd',' ', '../img/dog.jpg','The first dogs here',1),
+('Golden Retriever',' ', '../img/dog.jpg','The first dogs here',1),
+('English Bulldog',' ', '../img/dog.jpg','The first dogs here',1),
+('Poodle',' ', '../img/dog.jpg','The first dogs here',1),
+('Beagle',' ', '../img/dog.jpg','The first dogs here',1),
+('Rottweiler',' ', '../img/dog.jpg','The first dogs here',1),
+('German Shorthaired Pointer', ' ','../img/dog.jpg','The first dogs here',1),
+('Dachshund', ' ','../img/dog.jpg','The first dogs here',1)
