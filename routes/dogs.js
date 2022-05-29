@@ -15,7 +15,7 @@ const can = require('../permissions/users');
 
 
 router.get('/', getAll)
-router.post('/', bodyParser(), createDog)
+router.post('/', bodyParser(),auth, createDog)
 router.get('/:id([0-9]{1,})', getById)
 router.put('/:id([0-9]{1,})',bodyParser(),updateDog)
 router.del('/:id([0-9]{1,})', deleteDog)
@@ -63,7 +63,10 @@ async function createDog(ctx) {
    if (!permission.granted) {
     ctx.status = 403;
   } else {
+
+     
   const body = ctx.request.body
+    
   let result = await model.add(body)
   if (result) {
     ctx.status = 201
@@ -86,14 +89,14 @@ async function updateDog(ctx) {
     ctx.status = 403;
   } else {
 
-        const body = ctx.request.body
+   const body = ctx.request.body
    let id = ctx.params.id
  // console.log("route-article " , body)
  // console.log("route-id ",id)
   let result = await model.update(body,id)
   if (result) {
     ctx.status = 201
-    ctx.body = `Article with id ${id} updated` 
+    ctx.body = `${JSON.stringify(body)}` 
   } 
    }
   

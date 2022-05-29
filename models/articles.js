@@ -1,22 +1,22 @@
 const db = require('../helpers/database');
 //list all the articles in the database
-exports.getAll = async function getAll (page, limit, order) {
+exports.getAll = async function getAll(page, limit, order) {
   // TODO: use page, limit, order to give pagination
   let query = "SELECT * FROM dogs;"
-  let data = await db.run_query(query)  
+  let data = await db.run_query(query)
   return data
 }
 
 
 //get a single article by its id  
-exports.getById = async function getById (id) {
+exports.getById = async function getById(id) {
   let query = "SELECT * FROM dogs WHERE ID = ?"
   let values = [id]
   let data = await db.run_query(query, values)
   return data
 }
 
-exports.deleteById = async function deleteById (id) {
+exports.deleteById = async function deleteById(id) {
   let query = "Delete FROM dogs WHERE ID = ?"
   let values = [id]
   let data = await db.run_query(query, values)
@@ -26,37 +26,38 @@ exports.deleteById = async function deleteById (id) {
 
 
 //create a new article in the database
-exports.add = async function add (article) {  
+exports.add = async function add(article) {
   let keys = Object.keys(article)
-  let values = Object.values(article)  
-  keys = keys.join(',')   
+  let values = Object.values(article)
+  keys = keys.join(',')
   let parm = ''
-  for(i=0; i<values.length; i++){ parm +='?,'}
-  parm=parm.slice(0,-1)
+  for (i = 0; i < values.length; i++) { parm += '?,' }
+  parm = parm.slice(0, -1)
   let query = `INSERT INTO dogs (${keys}) VALUES (${parm})`
-  try{
-    await db.run_query(query, values)  
-    return {"status": 201}
-  } catch(error) {
+  try {
+    await db.run_query(query, values)
+    return { "status": 201 }
+  } catch (error) {
     return error
   }
 }
 
-exports.update = async function update (article,id) {  
-    
+exports.update = async function update(article, id) {
+
   //console.log("article " , article)
- // console.log("id ",id)
+  // console.log("id ",id)
   let keys = Object.keys(article)
-  let values = Object.values(article)  
-  let updateString=""
-  for(i=0; i<values.length;i++){updateString+=keys[i]+"="+"'"+values[i]+"'"+"," }
- updateString= updateString.slice(0, -1)
- // console.log("updateString ", updateString)
+  let values = Object.values(article)
+  let updateString = ""
+  for (i = 0; i < values.length; i++) { 
+    updateString += keys[i] + "=" + "'" + values[i] + "'" + "," }
+    updateString = updateString.slice(0, -1)
+   
   let query = `UPDATE dogs SET ${updateString} WHERE ID=${id} RETURNING *;`
-  try{
-   await db.run_query(query, values)  
-    return {"status": 201}
-  } catch(error) {
+  try {
+    await db.run_query(query, values)
+    return { "status": 201 }
+  } catch (error) {
     return error
   }
 }
