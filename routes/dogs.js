@@ -113,7 +113,7 @@ async function deleteDog(ctx) {
   ctx.status=201
     ctx.body = `Article with id ${id} deleted`
 }
-
+}
 
 
 async function likesCount(ctx) {
