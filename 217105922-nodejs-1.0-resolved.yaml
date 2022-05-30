@@ -1,0 +1,322 @@
+---
+openapi: 3.0.0
+info:
+  title: The Canine Shelter open API
+  description: ""
+  version: "1.0"
+servers:
+- url: https://virtserver.swaggerhub.com/217105922/nodejs/1.0
+  description: SwaggerHub API Auto Mocking
+- url: https://PetNode.217105922.repl.co
+  description: The Canine Shelter API Auto Mocking
+security:
+- BasicAuth: []
+paths:
+  /api/v1/dogs:
+    get:
+      description: Returns a list of dog
+      responses:
+        "200":
+          description: Successful response
+    post:
+      description: Add a list of dog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1_dogs_body'
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      security:
+      - BasicAuth: []
+  /api/v1/dogs/{id}:
+    get:
+      description: Returns a dog
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Successful response
+    put:
+      description: edit a dog
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dogs_id_body'
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      security:
+      - BasicAuth: []
+    delete:
+      description: del a dog
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      security:
+      - BasicAuth: []
+  /api/v1/dogs/{id}/likes:
+    get:
+      description: Returns likes of a dog
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Successful response
+    post:
+      description: add likes to a dog
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/id_likes_body'
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+  /api/v1/images:
+    post:
+      requestBody:
+        content:
+          image/png:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: Successful response
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+      security:
+      - BasicAuth: []
+  /api/v1/users:
+    get:
+      description: Returns a list of users
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+    post:
+      description: create a users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1_users_body'
+      responses:
+        "200":
+          description: Successful response
+  /api/v1/users/search:
+    get:
+      description: search a list of users
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+  /api/v1/users/{id}:
+    get:
+      description: Returns a users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+    put:
+      description: edit a users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_id_body'
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+  /api/v1/codes:
+    get:
+      description: show all code
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+  /api/v1.codes/gen:
+    put:
+      description: gen a code
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+  /api/v1/codes/{id}:
+    get:
+      description: get code by id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Successful response
+      security:
+      - BasicAuth: []
+components:
+  schemas:
+    v1_users_body:
+      required:
+      - email
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+    users_id_body:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+    v1_dogs_body:
+      required:
+      - alltext
+      - summary
+      - title
+      type: object
+      properties:
+        authorid:
+          type: number
+        imageurl:
+          type: string
+        summary:
+          type: string
+        alltext:
+          type: string
+        title:
+          type: string
+    dogs_id_body:
+      required:
+      - alltext
+      - summary
+      - title
+      type: object
+      properties:
+        authorid:
+          type: number
+        imageurl:
+          type: string
+        summary:
+          type: string
+        alltext:
+          type: string
+        title:
+          type: string
+    id_likes_body:
+      required:
+      - userid
+      type: object
+      properties:
+        userid:
+          type: number
+    inline_response_400:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

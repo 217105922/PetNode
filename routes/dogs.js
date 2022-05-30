@@ -17,8 +17,8 @@ const can = require('../permissions/users');
 router.get('/', getAll)
 router.post('/', bodyParser(),auth, createDog)
 router.get('/:id([0-9]{1,})', getById)
-router.put('/:id([0-9]{1,})',bodyParser(),updateDog)
-router.del('/:id([0-9]{1,})', deleteDog)
+router.put('/:id([0-9]{1,})',bodyParser(),auth,updateDog)
+router.del('/:id([0-9]{1,})',auth, deleteDog)
 
 router.get('/:id([0-9]{1,})/likes', likesCount);
 router.post('/:id([0-9]{1,})/likes/lc', likesCheck);
