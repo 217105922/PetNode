@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+ "test": "jest",
+ "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "^3.3.0",
+    "fs": "^0.0.1-security",
     "jsonschema": "^1.4.0",
     "koa": "^2.13.4",
     "koa-body": "^5.0.0",
@@ -26,5 +28,15 @@
     "sequelize": "^6.19.0",
     "swagger-generator-koa": "^2.0.0",
     "uuid": "^8.3.2"
-  }
+  },
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "supertest": "^6.2.3"
+  },
+  "jest": {
+ "testEnvironment": "node",
+ "coveragePathIgnorePatterns": [
+ "/node_modules/"
+ ]
+ }
 }

@@ -21,6 +21,18 @@ exports.findLikeCheck = async function findLikeCheck(id,uid) {
     return error
   }
 }
+
+
+exports.findUserLike = async function findUserLike(uid) {
+  let query = 'SELECT * FROM articleslikes WHERE userid=?'
+  try{
+  value = [uid];
+  let data =   await db.run_query(query, value);  
+  return data
+  } catch(error) {
+    return "try again later"
+  }
+}
     
 
 //remove a like record

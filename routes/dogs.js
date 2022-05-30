@@ -19,8 +19,8 @@ router.post('/', bodyParser(),auth, createDog)
 router.get('/:id([0-9]{1,})', getById)
 router.put('/:id([0-9]{1,})',bodyParser(),auth,updateDog)
 router.del('/:id([0-9]{1,})',auth, deleteDog)
-
 router.get('/:id([0-9]{1,})/likes', likesCount);
+router.get('/like/:id([0-9]{1,})',findUserLike);
 router.post('/:id([0-9]{1,})/likes/lc', likesCheck);
 router.post('/:id([0-9]{1,})/likes', auth, likePost);
 router.del('/:id([0-9]{1,})/likes', auth, dislikePost);
@@ -54,8 +54,21 @@ async function getById(ctx) {
   let id = ctx.params.id
   let article = await model.getById(id)
   if (article.length) {
-    ctx.body = article[0]
+       const body = article.map(post => {
+      // extract the post fields we want to send back (summary details)
+      const {id, title, imageurl, summary,  authorid} = post;
+      // add links to the post summaries for HATEOAS compliance
+      // clients can follow these to find related resources
+      const links = {
+       likes: `https://${ctx.host}${prefix}/${post.id}/likes`,
+       self: `https://${ctx.host}${prefix}/${post.id}`
+        
+      }
+      return {id, title,imageurl, summary,  authorid, links};
+    });
+    ctx.body = body;
   }
+  
 }
 
 async function createDog(ctx) {
@@ -149,6 +162,13 @@ async function dislikePost(ctx) {
   const result = await likes.dislike(id, uid);
   console.log(result);
   ctx.body = result.affectedRows ? {message: "disliked"} : {message: "error"};
+}
+
+async function findUserLike(ctx){
+
+  const uid = parseInt(ctx.params.id);
+  const result = await likes.findUserLike(uid);
+   ctx.body = result;
 }
 
 module.exports = router;
